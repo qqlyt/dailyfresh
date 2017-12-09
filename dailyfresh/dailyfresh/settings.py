@@ -1,3 +1,5 @@
+# coding=utf8
+
 """
 Django settings for dailyfresh project.
 
@@ -41,6 +43,8 @@ INSTALLED_APPS = (
     'df_goods',
     'tinymce',
     'df_cart',
+    'haystack',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -120,3 +124,16 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 600,
     'height': 400,
 }
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+
+#自动生成索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+#设置每页显示的数目，默认为20，可以自己修改
+HAYSTACK_SEARCH_RESULTS_PER_PAGE  =  8

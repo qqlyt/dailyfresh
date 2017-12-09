@@ -82,5 +82,14 @@ def detail(request,id):
     return response
 
 
+from haystack.views import SearchView
+class MySearchView(SearchView):
+    def extra_context(self):
+        context = super(MySearchView, self).extra_context()
+        context['title'] = '搜索'
+        context['guest_cart'] = 1
+        cart_count = CartInfo.objects.filter(user_id=self.request.session['user_id']).count()
+        context['cart_count'] = cart_count
 
+        return context
 
